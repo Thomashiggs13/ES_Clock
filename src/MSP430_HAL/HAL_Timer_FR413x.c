@@ -40,8 +40,9 @@
 #include <HAL.h>
 #include "HAL_Config_Private.h"
 
-// Simple callbacks to main function
-extern void TimerCallback(void);
+// Note: This project already defines a TIMER0_A0_VECTOR ISR in main.c for
+// button debouncing. To avoid duplicate vector definitions at link time,
+// the HAL Timer ISR is disabled by default.
 
 /**** Functions **************************************************************/
 void HAL_Timer_Init(void)
@@ -55,7 +56,8 @@ void HAL_Timer_Init(void)
 }
 
 
-// Timer interrupt service routine
+// Timer interrupt service routine (disabled unless explicitly enabled)
+#if defined(HAL_TIMER_ENABLE_ISR)
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt void Timer_A(void)
@@ -65,6 +67,8 @@ void __attribute__ ((interrupt(TIMER0_B0_VECTOR))) Timer_A (void)
 #error Compiler not supported!
 #endif
 {
+    extern void TimerCallback(void);
     TimerCallback();
     __bic_SR_register_on_exit(LPM3_bits);   // Exit LPM3
 }
+#endif

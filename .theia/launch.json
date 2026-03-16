@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ES_Clock",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "ES_Clock",
+                "resourceId": "/ES_Clock"
+            }
+        }
+    ]
+}
