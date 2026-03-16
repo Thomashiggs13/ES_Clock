@@ -48,3 +48,20 @@ void LCD_Update(void)
     LCDMEM[7]  = 0x04;
     LCDMEM[11] = 0x04;
 }
+
+void LCD_Temp_Update(void)
+{
+    extern volatile unsigned char *Seconds;
+    extern volatile unsigned char *Minutes;
+    extern volatile unsigned char *Hours;
+    
+    LCDMEM[LCD_POS1] = digit[(*Hours)/10];
+    LCDMEM[LCD_POS2] = digit[(*Hours)%10];
+    LCDMEM[LCD_POS3] = digit[(*Minutes)/10];
+    LCDMEM[LCD_POS4] = digit[(*Minutes)%10];
+    LCDMEM[LCD_POS5] = digit[(*Seconds)/10];
+    LCDMEM[LCD_POS6] = digit[(*Seconds)%10];
+    LCDMEM[7]  = 0x04;
+    LCDMEM[11] = 0x04;
+}
+

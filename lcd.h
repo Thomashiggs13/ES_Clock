@@ -14,6 +14,7 @@
 // Function prototypes
 void LCD_Init(void);
 void LCD_Update(void);
+void LCD_Temp_Update(void);
 unsigned char LCD_GetDigit(unsigned char digit);
 
 #endif /* LCD_H_ */
