@@ -1,12 +1,6 @@
-#include <msp430.h>
 
-int main(void)
+void main(void)
 {
-   
-
-    while(1)
-    {
-       
-    }
+ 
 }
 
