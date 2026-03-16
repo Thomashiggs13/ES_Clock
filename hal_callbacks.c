@@ -7,14 +7,30 @@
 // Provide minimal default implementations so the project links and you can
 // debug, even when using a different main application.
 
-void ButtonCallback_SW1(void)
+// Mark as weak defaults so real application implementations can override
+// without causing duplicate symbol errors.
+#if defined(__TI_COMPILER_VERSION__)
+#pragma WEAK(ButtonCallback_SW1)
+#pragma WEAK(ButtonCallback_SW2)
+#pragma WEAK(TimerCallback)
+#endif
+
+#if defined(__GNUC__)
+#define WEAK_ATTR __attribute__((weak))
+#else
+#define WEAK_ATTR
+#endif
+
+WEAK_ATTR void ButtonCallback_SW1(void)
 {
 }
 
-void ButtonCallback_SW2(void)
+WEAK_ATTR void ButtonCallback_SW2(void)
 {
 }
 
-void TimerCallback(void)
+WEAK_ATTR void TimerCallback(void)
 {
 }
+
+#undef WEAK_ATTR
