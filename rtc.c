@@ -1,23 +1,35 @@
 #include "rtc.h"
 #include "time.h"
 
-#pragma vector = RTC_VECTOR
-__interrupt void RTC_ISR(void)
+void RTC_HandleInterrupt(void)
 {
     extern volatile int running;
-    
+
     switch(__even_in_range(RTCIV, RTCIV_RTCIF))
     {
         case RTCIV_NONE:
             break;
         case RTCIV_RTCIF:
-            if(running)
+            if (running)
+            {
                 Time_Increment();
+            }
             break;
         default:
             break;
     }
 }
+
+// Optional: let this module own the RTC_VECTOR ISR.
+// Default is OFF to avoid duplicate vector definitions when main.c already
+// defines an RTC ISR.
+#if defined(RTC_MODULE_OWNS_ISR)
+#pragma vector = RTC_VECTOR
+__interrupt void RTC_ISR(void)
+{
+    RTC_HandleInterrupt();
+}
+#endif
 
 void RTC_Init(void)
 {
