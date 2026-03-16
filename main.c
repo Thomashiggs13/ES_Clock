@@ -19,6 +19,12 @@ void ButtonCallback_SW2(void)
     P4OUT ^= LED2;
 }
 
+// Required by the TI HAL timer module (still part of the CCS project build).
+// This simplified polling test does not use the HAL timer, so this is a no-op.
+void TimerCallback(void)
+{
+}
+
 // Main entry point - GPIO and Button test
 int main(void)
 {
